@@ -1,12 +1,15 @@
 #define _UNICODE 
+#define UNICODE
 
 #include <iostream>
-#include <tchar.h>
 #include <Windows.h>
+#include <tchar.h>
+
 using namespace std;
 
 void UnicodeType();
 void TcharTest();
+void WindowsFunctions();
 void ConvertAnsiToUnicodeCpp();
 void ConvertUnicodeToAnsiCpp();
 void ConvertAnsiToUnicodeWinApi();
@@ -16,6 +19,7 @@ int main()
 {
 	//UnicodeType();
 	//TcharTest();
+	//WindowsFunctions();
 	//ConvertAnsiToUnicodeCpp();
 	//ConvertUnicodeToAnsiCpp();
 	//ConvertAnsiToUnicodeWinApi();
@@ -39,10 +43,25 @@ void UnicodeType()
 
 void TcharTest()
 {
-	TCHAR szBuf3[15] = _TEXT("Hello,");
-	_tcscat_s(szBuf3, _T(" world!"));
+	TCHAR szBuf3[15] = TEXT("Hello,");
+	_tcscat_s(szBuf3, 15, TEXT(" world!"));
 	wcout << szBuf3 << '\n';
 	cout << "The size of array: " << sizeof(szBuf3) << " bytes\n"; // 30 байт
+}
+
+void WindowsFunctions()
+{
+	char szBuf1[15] = "Hello,";
+	lstrcatA(szBuf1, " world!");
+	cout << "String: " << szBuf1 << endl;
+
+	wchar_t szBuf2[15] = L"Hello,";
+	lstrcatW(szBuf2, L" world!");
+	wcout << "String: " << szBuf2 << endl;
+
+	TCHAR szBuf3[15] = TEXT("Hello, ");
+	lstrcat(szBuf3, TEXT("world!"));
+	wcout << "String: " << szBuf3 << endl;
 }
 
 void ConvertAnsiToUnicodeCpp()
@@ -121,5 +140,7 @@ void ConvertUnicodeToAnsiWinApi()
 	cout << ptr << endl;
 	cout << "Length of ANSI-string: " << strlen(ptr) << endl;
 	cout << "Size of allocated memory: " << _msize(ptr) << endl;
+	cout << "Used default symbol: " << isDefSymbol << endl;
+
 	delete[] ptr;
 }
