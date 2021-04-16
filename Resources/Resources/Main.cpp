@@ -1,6 +1,7 @@
 #include "Windows.h"
 #include "windowsx.h"
 #include "tchar.h"
+#include "resource.h"
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -10,10 +11,16 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	WNDCLASSEX wndClass;
 	wndClass.cbSize = sizeof(WNDCLASSEX);
-	wndClass.style = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
+	wndClass.style = CS_HREDRAW | CS_VREDRAW;
 	wndClass.hInstance = hInstance;
-	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+
+	//LoadCursor загружает курсор из ресурсов приложения
+	//MAKEINTRESOURCE нужен для преобразования идентификатора в строку
+	wndClass.hCursor = LoadCursor(hInstance, MAKEINTRESOURCE(IDC_CURSOR1));
+
+	//LoadCursor загружает иконку из ресурсов приложения
+	wndClass.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
+
 	wndClass.hIconSm = NULL;
 	wndClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
 	wndClass.cbClsExtra = 0;
@@ -56,63 +63,44 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg)
 	{
 	case WM_DESTROY:
-		PostQuitMessage(0); //WM_QUIT
-		break;
-
-	case WM_LBUTTONDOWN:
-		if((wParam & MK_CONTROL) != 0)
-			SetWindowText(hwnd, L"Left button down with ctrl");
-		else
-			SetWindowText(hwnd, L"Left button down");
-		break;
-
-	case WM_LBUTTONUP:
-		SetWindowText(hwnd, L"Left button up");
-		break;
-
-	case WM_LBUTTONDBLCLK:
-		SetWindowText(hwnd, L"Left button double click");
+		PostQuitMessage(0);
 		break;
 
 	case WM_MOUSEMOVE:
 	{
-		int x = GET_X_LPARAM(lParam);
-		int y = GET_Y_LPARAM(lParam);
+		int x = GET_X_LPARAM(lParam);	
 
-		WCHAR str[20];
-		wsprintf(str, L"x: %4d, y: %4d", x, y);
-
-		SetWindowText(hwnd, str);
-		break;
-	}	
-
-	case WM_RBUTTONUP:
-	{
-		RECT rect;
-		GetWindowRect(hwnd, &rect); //экранные координаты
-
-		WCHAR str[50];
-		wsprintf(str, L"left: %d, top: %d, right: %d, bottom: %d", rect.left, rect.top, rect.right, rect.bottom);
-		
-		MessageBox(hwnd, str, L"Get window rect", MB_OK);
-
-		int width = rect.right - rect.left;
-		int height = rect.bottom - rect.top;
-
-		MoveWindow(hwnd, rect.left - 10, rect.top, width, height, true);
-		break;
-	}
-
-	case WM_MBUTTONUP:
-	{
 		RECT rect;
 		GetClientRect(hwnd, &rect);
 
-		WCHAR str[50];
-		wsprintf(str, L"left: %d, top: %d, right: %d, bottom: %d", rect.left, rect.top, rect.right, rect.bottom);
+		//GetModuleHandle возвращает дескриптор экземпляра приложения, 
+		//он нужен для вызова Load функций
+		HINSTANCE hInst = GetModuleHandle(0);
 
-		MessageBox(hwnd, str, L"Get client rect", MB_OK);
-		
+		int idCursor = x < rect.right / 2 ? IDC_CURSOR1 : IDC_CURSOR2;	
+
+		//Загружаем курсор из ресурсов и получаем его дескриптор
+		HCURSOR hCur = LoadCursor(hInst, MAKEINTRESOURCE(idCursor));
+
+		if (hCur != NULL) {
+			//SetCursor(hCur); Динамически меняет курсор
+			
+			//SetClassLong меняет поля в классе окна
+			//в данном случае меняем курсор
+			SetClassLong(hwnd, GCL_HCURSOR, (LONG)hCur);
+		}
+		else {
+			//GetLastError возвращает код ошибки, 
+			//который установила последняя вызванная функция 
+
+			//@err,c позволяет просмотреть код ошибки в дебаггере
+			//@err,hr позволяет просмотреть описание ошибки в дебаггере
+
+			int errCode = GetLastError();
+			TCHAR str[20];
+			wsprintf(str, TEXT("Error code: %d"), errCode);
+			SetWindowText(hwnd, str);
+		}
 		break;
 	}
 

@@ -65,14 +65,14 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		PostQuitMessage(0);
 		break;
 
-	case WM_KEYDOWN:			
+	case WM_KEYDOWN:	
 		KeyDownHandler(hwnd, wParam, lParam);
 		break;	
 
-	case WM_KEYUP:	
+	case WM_KEYUP:			
 		KeyUpHandler(hwnd, wParam, lParam);
 		break;	
-
+	
 	case WM_CHAR:
 		WmCharHandler(hwnd, wParam, lParam);
 		break;
@@ -87,10 +87,11 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 void KeyDownHandler(HWND hwnd, WPARAM wParam, LPARAM lParam)
 {
 	int vkey = wParam;
-	int alt = lParam & KF_ALTDOWN;
+	
+	short repeat = LOWORD(lParam);
 
 	WCHAR str[50];	
-	wsprintf(str, L"vkey: %d, alt: %d", vkey, alt);	
+	wsprintf(str, L"vkey: %d, repeat: %d", vkey, repeat);	
 
 	SetWindowText(hwnd, str);
 }
