@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StaticAndButton", "StaticAndButton\StaticAndButton.vcxproj", "{3B685F58-6546-4465-9F11-A5DD9409076E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CheckBoxAndRadio", "CheckBoxAndRadio\CheckBoxAndRadio.vcxproj", "{7E3368DD-F0A9-44B9-B655-943BDD8D6C05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{3B685F58-6546-4465-9F11-A5DD9409076E}.Release|x64.Build.0 = Release|x64
 		{3B685F58-6546-4465-9F11-A5DD9409076E}.Release|x86.ActiveCfg = Release|Win32
 		{3B685F58-6546-4465-9F11-A5DD9409076E}.Release|x86.Build.0 = Release|Win32
+		{7E3368DD-F0A9-44B9-B655-943BDD8D6C05}.Debug|x64.ActiveCfg = Debug|x64
+		{7E3368DD-F0A9-44B9-B655-943BDD8D6C05}.Debug|x64.Build.0 = Debug|x64
+		{7E3368DD-F0A9-44B9-B655-943BDD8D6C05}.Debug|x86.ActiveCfg = Debug|Win32
+		{7E3368DD-F0A9-44B9-B655-943BDD8D6C05}.Debug|x86.Build.0 = Debug|Win32
+		{7E3368DD-F0A9-44B9-B655-943BDD8D6C05}.Release|x64.ActiveCfg = Release|x64
+		{7E3368DD-F0A9-44B9-B655-943BDD8D6C05}.Release|x64.Build.0 = Release|x64
+		{7E3368DD-F0A9-44B9-B655-943BDD8D6C05}.Release|x86.ActiveCfg = Release|Win32
+		{7E3368DD-F0A9-44B9-B655-943BDD8D6C05}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
