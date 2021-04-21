@@ -1,0 +1,4 @@
+Title: Edit Control
+Text: An edit control is a rectangular control window typically used in a dialog box to permit the user to enter and edit text by typing on the keyboard.
+Title: Button
+Text:  A button is a control the user can click to provide input to an application.
