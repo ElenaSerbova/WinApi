@@ -26,5 +26,8 @@ int main()
         cout << "fooInDll: " << fooInDll() << endl;
     }
 
+    const double* pPi = (const double*)GetProcAddress(hInstLib, "Pi");
+    cout << "Pi: " << *pPi << endl;
+
     FreeLibrary(hInstLib);
 }

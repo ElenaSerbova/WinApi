@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-#include "FirstDll.h"
+#include "../FirstDll/FirstDll.h"
 
 int main()
 {

@@ -2,7 +2,7 @@
 
 #include "FirstDll.h"
 
-FIRSTDLL_API const int Pi = 3.1415;
+FIRSTDLL_API const double Pi = 3.1415;
 
 
 FIRSTDLL_API int fooInDll()
